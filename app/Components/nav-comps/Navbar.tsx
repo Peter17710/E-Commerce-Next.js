@@ -36,6 +36,11 @@ export default function Navbar() {
   <NavigationMenuList className='font-bold gap-2'>
     <NavigationMenuItem><button><ShoppingCart /></button></NavigationMenuItem>
     <NavigationMenuItem><button><Heart /></button></NavigationMenuItem>
+
+    <NavigationMenuItem> <Link href="/login">Login</Link> </NavigationMenuItem>
+    <NavigationMenuItem> <Link href="/register">Register</Link> </NavigationMenuItem>
+    <NavigationMenuItem> <Link href="/logout ">Logout</Link> </NavigationMenuItem>
+
   </NavigationMenuList>
 
 
