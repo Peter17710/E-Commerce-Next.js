@@ -1,28 +1,14 @@
-export interface CategoryRef {
-    _id: string
-    name: string
-    slug: string
-    category?: string
-    image?: string
-}
-
-/** Shape of product objects from ecommerce.routemisr.com API */
 export interface Products {
-    _id: string
-    id?: string
+    id: number
     title: string
-    slug: string
     description: string
     price: number
-    quantity: number
-    sold: number
+    thumbnail: string
     images: string[]
-    imageCover: string
-    category: CategoryRef
-    brand: CategoryRef
-    subcategory: CategoryRef[]
-    ratingsAverage: number
-    ratingsQuantity: number
-    createdAt: string
-    updatedAt: string
+    rating: number
+    stock: number
+    brand: string
+    category: string
+    tags: string[]
+    discountPercentage: number
 }

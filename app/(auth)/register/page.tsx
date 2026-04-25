@@ -26,7 +26,7 @@ export default function registerPage() {
     console.log(values);
 
     try {
-          let response = await axios.post('https://ecommerce.routemisr.com/api/v1/auth/signup', values)
+          let response = await axios.post('https://dummyjson.com/users/add', values)
           if(response?.data?.message === 'success') {
             router.push('/login')
           }

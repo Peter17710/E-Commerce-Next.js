@@ -1,50 +1,23 @@
-export interface Brand {
-    _id: string;
-    name: string;
-    slug: string;
-    image: string;
-}
-
-export interface Category {
-    _id: string;
-    name: string;
-    slug: string;
-    image: string;
-}
-
-export interface Subcategory {
-    _id: string;
-    name: string;
-    slug: string;
-    category: string;
+export interface ProductDetails {
+    id: number
+    title: string
+    description: string
+    price: number
+    thumbnail: string
+    images: string[]
+    rating: number
+    stock: number
+    brand: string
+    category: string
+    tags: string[]
+    discountPercentage: number
+    reviews: Review[]
 }
 
 export interface Review {
-    _id?: string;
-    rating?: number;
-    comment?: string;
-    user?: string;
-    createdAt?: string;
-}
-
-export interface ProductDetails {
-    _id: string;
-    id: string;
-    title: string;
-    slug: string;
-    description: string;
-    price: number;
-    imageCover: string;
-    images: string[];
-    category: Category;
-    subcategory: Subcategory[];
-    brand: Brand;
-    ratingsAverage: number;
-    ratingsQuantity: number;
-    reviews: Review[];
-    quantity: number;
-    sold: number;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
+    rating: number
+    comment: string
+    reviewerName: string
+    reviewerEmail: string
+    date: string
 }

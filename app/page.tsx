@@ -4,6 +4,8 @@ import CategorySliderComp from "./Components/sliders-comps/CategorySliderComp";
 import { getCategories } from "./actions/categories.action";
 import { getProducts } from "./actions/products.action";
 import ProductsGridSystem from "./Components/products-comps/ProductsGridSystem";
+import { getServerSession } from "next-auth";
+import { OPTIONS } from "./api/auth/[...nextauth]/route";
 
 export default async function Home() {
 
@@ -12,6 +14,14 @@ export default async function Home() {
 
   // const { data: products } = await getProducts();
 
+
+
+  const session = await getServerSession(OPTIONS)
+  console.log(session , "session data");
+  // if(!session){
+  //   return <p>You need to Login</p>
+  // }
+  
   const productsResponse = await getProducts();
   const productsData = productsResponse.data ?? [];
 

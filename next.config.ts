@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
- images: {
+  images: {
     remotePatterns: [
       {
         protocol: 'https',
@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/Route-Academy-products/**',
         search: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.dummyjson.com',
       },
     ],
   },
