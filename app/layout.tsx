@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./Components/nav-comps/Navbar";
 import { AuthProvider } from "./context/AuthProvider";
-import { CartProvider } from "./context/CartContext"; // ✅ add this
-
+import { CartProvider } from "./context/CartContext";
+import ReduxProvider from "app/context/ReduxProvider"
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -35,9 +35,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <AuthProvider>
-          <CartProvider> {/* ✅ wrap with CartProvider */}
-            <Navbar />
-            {children}
+          <CartProvider>
+            <ReduxProvider>
+              <Navbar />
+              {children}
+            </ReduxProvider>
           </CartProvider>
         </AuthProvider>
       </body>

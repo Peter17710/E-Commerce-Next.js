@@ -5,9 +5,15 @@ import Image from 'next/image'
 import React from 'react'
 import { useCart } from '@/app/context/CartContext'
 import Link from 'next/link'
+import toast from 'react-hot-toast'
 
 export default function CartTable() {
   const { cart, removeFromCart, increaseQty, decreaseQty, totalPrice, totalItems } = useCart()
+
+  async function handleRemoveCart(id: string) { // ✅ string not number
+    removeFromCart(id)
+    toast.success("Product successfully deleted")
+  }
 
   if (cart.length === 0) {
     return (
@@ -31,28 +37,35 @@ export default function CartTable() {
         </TableHeader>
         <TableBody>
           {cart.map(item => (
-            <TableRow key={item.id}>
+            <TableRow key={item._id}> {/* ✅ _id */}
               <TableCell className="font-medium p-3 text-center">
                 <div className='items-center flex text-center gap-4'>
                   <div className='relative'>
                     <Badge
-                      onClick={() => removeFromCart(item.id)}
-                      className='absolute top-[-8px] left-[-8px] cursor-pointer z-10 bg-red-500 hover:bg-red-700'
-                    >x</Badge>
-                    <Image src={item.thumbnail} alt={item.title} width={64} height={64} className='rounded object-cover' />
+                      onClick={() => handleRemoveCart(item._id)} // ✅ _id
+                      className='absolute top-[-8px] left-[-8px] cursor-pointer z-10 bg-red-500 hover:bg-red-700'>
+                      x
+                    </Badge>
+                    <Image
+                      src={item.imageCover} // ✅ imageCover not thumbnail
+                      alt={item.title}
+                      width={64}
+                      height={64}
+                      className='rounded object-cover'
+                    />
                   </div>
                   <p className='text-left'>{item.title}</p>
                 </div>
               </TableCell>
-              <TableCell className='p-6 text-center'>${item.price.toFixed(2)}</TableCell>
+              <TableCell className='p-6 text-center'>{item.price.toFixed(2)} EGP</TableCell> {/* ✅ EGP */}
               <TableCell className='p-6'>
                 <div className="flex items-center text-center justify-center">
-                  <button onClick={() => decreaseQty(item.id)} className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-l">-</button>
+                  <button onClick={() => decreaseQty(item._id)} className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-l">-</button> {/* ✅ _id */}
                   <span className="bg-gray-100 text-gray-800 font-bold py-2 px-4">{item.quantity}</span>
-                  <button onClick={() => increaseQty(item.id)} className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-r">+</button>
+                  <button onClick={() => increaseQty(item._id)} className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-r">+</button> {/* ✅ _id */}
                 </div>
               </TableCell>
-              <TableCell className="p-6 text-center">${(item.price * item.quantity).toFixed(2)}</TableCell>
+              <TableCell className="p-6 text-center">{(item.price * item.quantity).toFixed(2)} EGP</TableCell> {/* ✅ EGP */}
             </TableRow>
           ))}
         </TableBody>
@@ -61,9 +74,9 @@ export default function CartTable() {
           <TableCell className="text-center"></TableCell>
           <TableCell className="text-center">{totalItems} items</TableCell>
           <TableCell className="text-center">
-            <p className='mb-2 font-bold'>${totalPrice.toFixed(2)}</p>
+            <p className='mb-2 font-bold'>{totalPrice.toFixed(2)} EGP</p> {/* ✅ EGP */}
             <button className="bg-blue-600 hover:bg-black py-3 text-white font-bold px-4 rounded">
-              Check Out
+              <Link href="/checkout">Check Out</Link>
             </button>
           </TableCell>
         </TableRow>

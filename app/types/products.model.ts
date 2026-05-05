@@ -1,14 +1,26 @@
+export interface CategoryRef {
+    _id: string
+    name: string
+    slug: string
+    category?: string
+    image?: string
+}
+
 export interface Products {
-    id: number
+    _id: string
     title: string
+    slug: string
     description: string
     price: number
-    thumbnail: string
+    quantity: number
+    sold: number
     images: string[]
-    rating: number
-    stock: number
-    brand: string
-    category: string
-    tags: string[]
-    discountPercentage: number
+    imageCover: string
+    category: CategoryRef
+    brand: CategoryRef
+    subcategory: CategoryRef[]
+    ratingsAverage: number
+    ratingsQuantity: number
+    createdAt: string
+    updatedAt: string
 }

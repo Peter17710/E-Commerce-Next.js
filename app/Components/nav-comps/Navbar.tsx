@@ -9,11 +9,11 @@ import Link from 'next/link';
 import { ShoppingCart, Heart } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
 import { Badge } from '@/components/ui/badge';
-import { useCart } from '@/app/context/CartContext'; 
+import { useCart } from '@/app/context/CartContext';
 
 export default function Navbar() {
   const { data: session } = useSession();
-  const { totalItems } = useCart(); // ✅ get live cart count
+  const { totalItems } = useCart();
 
   return (
     <div>
@@ -34,7 +34,6 @@ export default function Navbar() {
 
         <NavigationMenuList className='font-bold gap-2'>
 
-          {/* ✅ Cart icon with live count */}
           <NavigationMenuItem>
             <Link href="/cart" className='relative'>
               {totalItems > 0 && (
@@ -46,14 +45,8 @@ export default function Navbar() {
             </Link>
           </NavigationMenuItem>
 
-          {/* Wishlist icon */}
           <NavigationMenuItem>
-           <Link href="/wishlist" className='relative'>
-              {totalItems > 0 && (
-                <Badge variant="default" className='absolute top-[-8px] right-[-8px] z-10 text-xs px-1.5'>
-                  {totalItems}
-                </Badge>
-              )}
+            <Link href="/wishlist" className='relative'>
               <Heart />
             </Link>
           </NavigationMenuItem>

@@ -21,7 +21,25 @@ async function getUserCart() {
                 token: token
             }
         })
-        const list = normalizeProducts(response?.data?.products) // ✅ fixed
+        const list = normalizeProducts(response?.data?.products) 
+        return { data: list, status: response.status }
+    } catch (error: unknown) {
+        if (axios.isAxiosError(error)) {
+            return { data: [], status: error.response?.status }
+        }
+        return { data: [], status: 500 }
+    }
+}
+async function addProductToCart({productId}: {productId: string}) {
+    try {
+
+        const token = await getUserToken()
+        const response = await axios.post("https://dummyjson.com/cart" , { productId }, {
+            headers: {
+                token: token
+            }
+        })
+        const list = normalizeProducts(response?.data?.products) 
         return { data: list, status: response.status }
     } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
@@ -31,4 +49,22 @@ async function getUserCart() {
     }
 }
 
-export default getUserCart;
+// async function removeProductFromCart({productId}: {productId: string}) {
+//     try {
+
+//         const token = await getUserToken()
+//         const response = await axios.delete(`https://dummyjson.com/cart/${productId}`, {
+//             headers: {
+//                 token: token
+//             }
+//         })
+//         const list = normalizeProducts(response?.data?.products) 
+//         return { data: list, status: response.status }
+//     } catch (error: unknown) {
+//         if (axios.isAxiosError(error)) {
+//             return { data: [], status: error.response?.status }
+//         }
+//         return { data: [], status: 500 }
+//     }
+// }
+export default { getUserCart, addProductToCart };

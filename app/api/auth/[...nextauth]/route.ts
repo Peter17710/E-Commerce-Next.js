@@ -13,15 +13,13 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         console.log("Credentials received in authorize:", credentials);
-        const res = await fetch("https://dummyjson.com/auth/login", {
-          method: 'POST',
+        const res = await fetch("https://ecommerce.routemisr.com/api/v1/auth/signin", {
+    method: 'POST',
+    body: JSON.stringify({
+        email: credentials?.email,
+        password: credentials?.password
+        }),
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            // 2. DummyJSON expects 'username', NOT 'email'
-            username: credentials?.email, 
-            password: credentials?.password,
-            expiresInMins: 60, // optional
-          }),
         })
 
         const user = await res.json()
@@ -42,19 +40,18 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/login',
   },
-  callbacks: {
-    async session({ session, token }) {
-      // In NextAuth v4, 'user' is often undefined when using JWT strategy
-      // Use the 'token' to pass data to the session
-      return { ...session, user: { ...session.user, ...token } }
-    },
+ callbacks: {
     async jwt({ token, user }) {
-      if (user) {
-        return { ...token, ...user }
-      }
-      return token
+        if (user) {
+            token.token = (user as any).token // ✅ save Route API token
+        }
+        return token
+    },
+    async session({ session, token }) {
+        (session as any).token = token.token // ✅ expose token in session
+        return session
     }
-  },
+},
   secret: process.env.NEXTAUTH_SECRET,
 }
 

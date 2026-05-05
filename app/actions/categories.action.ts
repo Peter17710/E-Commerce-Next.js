@@ -3,17 +3,14 @@ import axios from "axios"
 
 async function getCategories() {
     try {
-        const response = await axios.get("https://dummyjson.com/products/categories");
+        const response = await axios.get("https://ecommerce.routemisr.com/api/v1/categories")
         return {
-            data: response?.data, // ✅ plain array, no .data.data
+            data: response?.data?.data, 
             status: response.status,
         }
     } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
-            return {
-                data: [],
-                status: error.response?.status,
-            }
+            return { data: [], status: error.response?.status }
         }
     }
 }

@@ -9,8 +9,8 @@ function normalizeProducts(payload: unknown): Products[] {
 
 async function getProducts() {
     try {
-        const response = await axios.get("https://dummyjson.com/products")
-        const list = normalizeProducts(response?.data?.products) // ✅ fixed
+        const response = await axios.get("https://ecommerce.routemisr.com/api/v1/products")
+        const list = normalizeProducts(response?.data?.data) 
         return { data: list, status: response.status }
     } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
@@ -22,8 +22,8 @@ async function getProducts() {
 
 async function getProductsDetails(id: string) {
     try {
-        const response = await axios.get(`https://dummyjson.com/products/${id}`) // ✅ fixed
-        return { data: response?.data, status: response.status }
+        const response = await axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`)
+        return { data: response?.data?.data, status: response.status }
     } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
             return { data: null, status: error.response?.status }

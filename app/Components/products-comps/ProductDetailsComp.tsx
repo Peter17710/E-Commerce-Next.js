@@ -8,10 +8,23 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 import Image from 'next/image';
+import { toast } from 'react-hot-toast';
+import { useCart } from '@/app/context/CartContext';
+import { useSession } from 'next-auth/react';
 
 export default function ProductDetailsComp({ ProductDetails }: { ProductDetails: ProductDetails }) {
+  const { addToCart } = useCart()
+  const { data: session } = useSession()
 
-  console.log(ProductDetails);
+const handleAddToCart = () => {
+  const token = (session as any)?.token // ✅ get token from session
+  if (!token) {
+    toast.error("Please login first!")
+    return
+  }
+  addToCart(ProductDetails, token)
+  toast.success("Product added to cart!")
+}
 
   if (!ProductDetails) return <div>Loading...</div>;
 
@@ -50,18 +63,21 @@ export default function ProductDetailsComp({ ProductDetails }: { ProductDetails:
 
         <div className="flex justify-between items-center">
           <div className="catPrice">
-            <p className='text-lg my-4'>{ProductDetails.category}</p> {/* ✅ fixed: was .category.name */}
-            <p className='text-lg my-4'>${ProductDetails.price.toFixed(2)}</p>
+            <p className='text-lg my-4'>{ProductDetails.category.name}</p> {/* ✅ back to .category.name */}
+            <p className='text-lg my-4'>{ProductDetails.price.toFixed(2)} EGP</p> {/* ✅ EGP currency */}
           </div>
           <div className='flex gap-2'>
             <StarRating
-              initialRating={Math.round(ProductDetails.rating * 2) / 2} // ✅ fixed: was ratingsAverage
+              initialRating={Math.round(ProductDetails.ratingsAverage * 2) / 2} // ✅ back to ratingsAverage
               dimension={5}
             />
           </div>
         </div>
 
-        <button className='w-full py-2 items-center text-2xl text-center text-white bg-black my-5 rounded-2xl'>
+        <button
+          onClick={handleAddToCart}
+          className='w-full py-2 items-center text-2xl text-center cursor-pointer text-white bg-black my-5 rounded-2xl'
+        >
           + Add to cart
         </button>
       </div>

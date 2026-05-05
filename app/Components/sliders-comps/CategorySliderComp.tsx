@@ -3,7 +3,7 @@ import { Categories } from '@/app/types/category.model'
 import { Navigation, Pagination } from 'swiper/modules';
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import Link from 'next/link' // ✅ add this
+import Image from 'next/image'
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -38,14 +38,20 @@ export default function CategorySliderComp({ category }: { category: Categories[
         }}
       >
         {category.map((cat) => (
-          <SwiperSlide key={cat.slug}>
-            <Link href={`/categories/${cat.slug}`}> {/* ✅ navigates to category page */}
-              <div className="flex items-center justify-center h-24 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 hover:from-black hover:to-slate-700 cursor-pointer transition-all duration-300 group border border-slate-200 hover:border-black">
-                <p className="text-center font-semibold text-slate-800 group-hover:text-white px-3 capitalize transition-colors duration-300">
-                  {cat.name}
-                </p>
-              </div>
-            </Link>
+          <SwiperSlide key={cat._id}>
+            <div className="relative w-full h-48 overflow-hidden rounded-xl cursor-pointer group">
+              <Image
+                src={cat.image}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                alt={cat.name}
+                className="object-cover group-hover:scale-110 transition-transform duration-300"
+                priority
+              />
+              <p className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-center py-2 font-semibold">
+                {cat.name}
+              </p>
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

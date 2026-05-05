@@ -1,23 +1,14 @@
-export interface ProductDetails {
-    id: number
-    title: string
-    description: string
-    price: number
-    thumbnail: string
-    images: string[]
-    rating: number
-    stock: number
-    brand: string
-    category: string
-    tags: string[]
-    discountPercentage: number
-    reviews: Review[]
-}
+import { Products } from './products.model'
 
 export interface Review {
-    rating: number
-    comment: string
-    reviewerName: string
-    reviewerEmail: string
-    date: string
+    _id?: string
+    rating?: number
+    comment?: string
+    user?: string
+    createdAt?: string
+}
+
+// ✅ extends Products so it's compatible with addToCart
+export interface ProductDetails extends Products {
+    reviews: Review[]
 }
