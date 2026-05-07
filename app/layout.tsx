@@ -5,6 +5,10 @@ import Navbar from "./Components/nav-comps/Navbar";
 import { AuthProvider } from "./context/AuthProvider";
 import { CartProvider } from "./context/CartContext";
 import ReduxProvider from "app/context/ReduxProvider"
+import { WishlistProvider } from "./context/WishlistContext";
+import { Toaster } from 'react-hot-toast'
+import Footer from "./Components/footer/Footer";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -34,12 +38,17 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <Toaster position="top-center" />
+
         <AuthProvider>
           <CartProvider>
-            <ReduxProvider>
-              <Navbar />
-              {children}
-            </ReduxProvider>
+            <WishlistProvider> 
+              <ReduxProvider>
+                <Navbar />
+                {children}
+                <Footer />
+              </ReduxProvider>
+            </WishlistProvider>
           </CartProvider>
         </AuthProvider>
       </body>

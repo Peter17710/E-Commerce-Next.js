@@ -14,7 +14,7 @@ export default function CategorySliderComp({ category }: { category: Categories[
 
   return (
     <div className='container px-15 py-5 mx-auto'>
-      <h2 className='text-center text-3xl my-5'>Shop by Category</h2>
+      <h2 className='text-4xl tracking-tighter font-extrabold text-center my-7'>Shop by Category</h2>
 
       <style>{`
         .category-swiper .swiper-button-next,

@@ -32,7 +32,7 @@ export default async function Home() {
 
   return (
     <>
-      <h1 className="text-3xl text-center">Home Page</h1>
+      {/* <h1 className="text-4xl tracking-tighter font-extrabold text-center my-7">Home</h1> */}
 
       <MainSlider />
       {/* <CategorySlider /> */}

@@ -8,6 +8,7 @@ import Link from "next/link"
 import { useCart } from '@/app/context/CartContext'
 import toast from "react-hot-toast"
 import { useSession } from "next-auth/react"
+import { useWishlist } from "@/app/context/WishlistContext"
 
 
 export default function ProductCard({ productData }: { productData: Products }) {
@@ -24,6 +25,18 @@ export default function ProductCard({ productData }: { productData: Products }) 
     toast.success("Added to cart!")
   }
 
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist()
+
+const handleWishlist = () => {
+  if (isInWishlist(productData._id)) {
+    removeFromWishlist(productData._id)
+    toast.error("Removed from wishlist")
+  } else {
+    addToWishlist(productData)
+    toast.success("Added to wishlist!")
+  }
+}
+
     return (
         <div className="min-w-0">
             <Card className="relative h-auto w-full group">
@@ -31,7 +44,9 @@ export default function ProductCard({ productData }: { productData: Products }) 
                     <button onClick={handleAddToCart} className="text-slate-900 hover:text-blue-700">
                         <ShoppingCart />
                     </button>
-                    <button className="text-slate-900 hover:text-blue-700"><Heart /></button>
+                    <button onClick={handleWishlist} className="text-slate-900 hover:text-red-500">
+                        <Heart className={isInWishlist(productData._id) ? 'fill-red-500 text-red-500' : ''}/>
+                        </button>
                     <button className="text-slate-900 hover:text-blue-700">
                         <Link href={`/products/${productData._id}`}>
                             <ZoomIn />
